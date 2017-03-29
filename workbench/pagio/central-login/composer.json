@@ -1,0 +1,24 @@
+{
+    "name": "pagio/central-login",
+    "description": "",
+    "authors": [
+        {
+            "name": "Libor Buček",
+            "email": "libor.bucek@avito.cz"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Pagio\\CentralLogin\\Controller\\": "src/controllers/",
+            "Pagio\\CentralLogin\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
