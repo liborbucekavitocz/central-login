@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('ANL'),
+	'local' => array('ANL', 'Libor-MBP'),
 
 ));
 

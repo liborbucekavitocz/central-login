@@ -2,6 +2,16 @@
 
 class HomeController extends \Controller {
 
+    /**
+     * @var \Pagio\CentralLogin\Auth\AuthDriverInterface
+     */
+    protected $authDriver;
+
+    public function __construct(AuthDriver $authDriver)
+    {
+        $this->authDriver = $authDriver;
+    }
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -17,9 +27,7 @@ class HomeController extends \Controller {
 
 	public function showWelcome()
 	{
-		\Auth::loginUsingId(1, true);
-
-		return View::make('hello');
+	    return View::make('hello');
 	}
 
 }
