@@ -19,6 +19,17 @@ class CentralLoginServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('pagio/central-login');
+
+		include __DIR__ . "/../../routes.php";
+
+		$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+		$aliases = $loader->getAliases();
+
+//		if (!isset($aliases["MicrositeItem"])) {
+//			$loader->alias('MicrositeItem', '\Pagio\EshopMicrosite\Microsite\MicrositeItem');
+//		}
+//		App::singleton('MicrositeRepository', '\Pagio\EshopMicrosite\Microsite\MicrositeRepository');
 	}
 
 	/**
