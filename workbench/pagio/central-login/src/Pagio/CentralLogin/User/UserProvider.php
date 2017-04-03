@@ -109,7 +109,6 @@ class UserProvider implements UserProviderInterface
     public function updateRememberToken(UserInterface $userItem, $token)
     {
         $userItem->updateRememberToken($token);
-        $userItem->save();
     }
 
 }

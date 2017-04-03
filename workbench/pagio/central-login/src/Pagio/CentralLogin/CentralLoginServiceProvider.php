@@ -4,7 +4,9 @@ use Illuminate\Support\ServiceProvider;
 use App;
 use Auth;
 use Illuminate\Auth\Guard;
+use Pagio\CentralLogin\Auth\AuthDriver;
 use Pagio\CentralLogin\Auth\AuthHasher;
+use Pagio\CentralLogin\Driver\User\UserRepository;
 use Pagio\CentralLogin\User\UserProvider;
 
 class CentralLoginServiceProvider extends ServiceProvider {
@@ -81,9 +83,12 @@ class CentralLoginServiceProvider extends ServiceProvider {
 
         $aliases = $loader->getAliases();
 
-        if (!isset($aliases["AuthDriver"])) {
-            $loader->alias('AuthDriver', '\Pagio\CentralLogin\Auth\AuthDriver');
-        }
+//        if (!isset($aliases['AuthDriver'])) {
+//            $loader->alias('AuthDriver', '\Pagio\CentralLogin\Auth\AuthDriver');
+//        }
+        App::singleton('AuthDriver', function () {
+            return new AuthDriver(new UserRepository());
+        });
         App::singleton('UserItem', '\Pagio\CentralLogin\Driver\User\UserItem');
         App::singleton('UserRepository', '\Pagio\CentralLogin\Driver\User\UserRepository');
 

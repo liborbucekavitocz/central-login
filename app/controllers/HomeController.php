@@ -2,32 +2,40 @@
 
 class HomeController extends \Controller {
 
-    /**
-     * @var \Pagio\CentralLogin\Auth\AuthDriverInterface
-     */
-    protected $authDriver;
+    protected $centralLogin;
 
-    public function __construct(AuthDriver $authDriver)
+    public function __construct()
     {
-        $this->authDriver = $authDriver;
+        $config = \Config::get("central-login::config");
+        $this->centralLogin = new \Pagio\CentralLogin\CentralLogin(
+            App::make("AuthDriver"),
+            new \Pagio\CentralLogin\Slave\SlaveRequestCollector(), new \Pagio\CentralLogin\Driver\User\UserRepository(),
+            new \Pagio\CentralLogin\Driver\User\UserTokenRepository(),
+            new \Pagio\CentralLogin\Storage\StorageContainer(new \Pagio\CentralLogin\Storage\SessionRepository()),
+            $config
+        );
     }
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Default Home Controller
+    |--------------------------------------------------------------------------
+    |
+    | You may wish to use controllers instead of, or in addition to, Closure
+    | based routes. That's great! Here is an example controller method to
+    | get you started. To route to this controller, just add the route:
+    |
+    |	Route::get('/', 'HomeController@showWelcome');
+    |
+    */
 
-	public function showWelcome()
-	{
-	    return View::make('hello');
-	}
+    public function showWelcome()
+    {
+//        $this->centralLogin->register("buca92", "123456");
+        $this->centralLogin->token();
+
+
+        return View::make('hello');
+    }
 
 }

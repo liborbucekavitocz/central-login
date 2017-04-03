@@ -2,22 +2,36 @@
 
 use Auth;
 use DB;
+use Pagio\CentralLogin\Driver\User\UserItem;
+use Pagio\CentralLogin\User\UserRepositoryInterface;
 
 class AuthDriver implements AuthDriverInterface {
 
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function loginByUsername($username, $rememberMe = true)
     {
-        $id = DB::table("user")
-            ->where("login", "=", $username)
-            ->pluck("userid");
+        $userItem = $this->userRepository->getItemByLogin($username);
 
-        if (!$id) {
+        if (!$userItem) {
             return null;
         }
 
-        return Auth::loginUsingId($id, $rememberMe);
+        return Auth::loginUsingId($userItem->getId(), $rememberMe);
     }
 
+    /**
+     * @return UserItem
+     */
     public function getUser()
     {
         return Auth::user();

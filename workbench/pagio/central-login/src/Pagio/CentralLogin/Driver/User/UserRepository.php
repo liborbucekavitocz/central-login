@@ -28,6 +28,20 @@ class UserRepository implements UserRepositoryInterface {
         return $this->item($row);
     }
 
+    public function create($login)
+    {
+        $data = array(
+            "login" => $login,
+            "created_at" => date("Y-m-d H:i:s"),
+            "updated_at" => date("Y-m-d H:i:s")
+        );
+
+        $data["userid"] = $this->getTableQueryBuilder()
+            ->insertGetId($data);
+
+        return $this->item($data);
+    }
+
     protected function items($rows)
     {
         $items = array();
